@@ -14,10 +14,17 @@ def filter_instances(project):
         instances = ec2.instances.all()
     return instances
 
-
 @click.group()
+def cli():
+    """Shotty manages snapshots"""
+
+@cli.group('instances')
 def instances():
     """Commands for instances"""
+
+@cli.group('volumes')
+def volumes():
+    """Commands for volumes"""
 
 
 @instances.command('list')
@@ -57,4 +64,4 @@ def stop_instances(project):
     return
 
 if __name__ == '__main__':
-    instances()
+    cli()
