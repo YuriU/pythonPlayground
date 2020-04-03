@@ -67,6 +67,16 @@ def stop_instances(project):
 
     return
 
+@instances.command('snapshot')
+@click.option('--project', default=None)
+def snapshot_instances(project):
+    "Snapshot instances"
+    for i in filter_instances(project):
+        for v in i.volumes.all():
+            print("Creating snapshot of {0}".format(v.id))
+            v.create_snapshot(Description="Created by Snapshot analyzer")
+    return
+
 @volumes.command('list')
 @click.option('--project', default=None)
 def list_volumes(project):
