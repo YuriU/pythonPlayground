@@ -36,7 +36,7 @@ def list_instances(project):
         print(', '.join((
             i.id,
             i.instance_type,
-            i.placement['AvaliabilityZone'],
+            i.placement['AvailabilityZone'],
             i.state['Name'],
             i.public_dns_name,
             tags.get('Project', '<no project>'))))
