@@ -63,5 +63,20 @@ def stop_instances(project):
 
     return
 
+@volumes.command('list')
+@click.option('--project', default=None)
+def list_volumes(project):
+    "List of volumes"
+    for i in filter_instances(project):
+        for v in i.volumes.all():
+            print(", ".join((
+                v.id,
+                i.id,
+                v.state,
+                str(v.size) + "GiB",
+                v.encrypted and "Encrypted" or "Not Encrypted"
+            )))
+    return
+
 if __name__ == '__main__':
     cli()
