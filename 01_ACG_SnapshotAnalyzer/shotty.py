@@ -18,6 +18,10 @@ def filter_instances(project):
 def cli():
     """Shotty manages snapshots"""
 
+@cli.group('snapshots')
+def snapshots():
+    """Commands for snapshots"""
+
 @cli.group('instances')
 def instances():
     """Commands for instances"""
@@ -75,6 +79,23 @@ def list_volumes(project):
                 v.state,
                 str(v.size) + "GiB",
                 v.encrypted and "Encrypted" or "Not Encrypted"
+            )))
+    return
+
+@snapshots.command('list')
+@click.option('--project', default=None)
+def list_snapshots(project):
+    "List of Snapshots"
+    for i in filter_instances(project):
+        for v in i.volumes.all():
+            for s in v.snapshots.all():
+                print(", ".join((
+                    s.id,
+                    v.id,
+                    i.id,
+                    v.state,
+                    s.progress,
+                    s.start_time.strftime("%C")
             )))
     return
 
