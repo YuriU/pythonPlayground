@@ -112,7 +112,8 @@ def list_volumes(project):
 
 @snapshots.command('list')
 @click.option('--project', default=None)
-def list_snapshots(project):
+@click.option('--all', 'list_all', default=False, is_flag=True)
+def list_snapshots(project, list_all):
     "List of Snapshots"
     for i in filter_instances(project):
         for v in i.volumes.all():
@@ -125,6 +126,8 @@ def list_snapshots(project):
                     s.progress,
                     s.start_time.strftime("%C")
             )))
+
+            if s.state == 'completed' and not list_all: break
     return
 
 if __name__ == '__main__':
