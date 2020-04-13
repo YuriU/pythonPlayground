@@ -22,5 +22,12 @@ def list_bucket_objects(bucket):
     for obj in s3.Bucket(bucket).objects.all():
         print(obj)
 
+
+@cli.command('setup-bucket')
+@click.argument('bucket')
+def setup_bucket(bucket):
+    "Create and configure S3 bucket"
+    pass
+
 if __name__ == '__main__':
     cli()
