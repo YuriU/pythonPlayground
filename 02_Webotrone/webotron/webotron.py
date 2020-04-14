@@ -1,6 +1,7 @@
 import boto3
 import click
 from pathlib import Path
+import mimetypes
 from botocore.exceptions import ClientError
 
 session = boto3.Session(profile_name='default')
@@ -76,11 +77,12 @@ def setup_bucket(bucket):
     return
 
 def upload_file(s3_bucket, path, key):
+    content_type = mimetypes.guess_type(key)[0] or 'text/plain'
     s3_bucket.upload_file(
         path,
         key,
         ExtraArgs={
-            'ContentType': 'text/html'
+            'ContentType': content_type
         }
     )
 
@@ -96,7 +98,7 @@ def sync(pathname, bucket):
     def handle_directory(target):
         for p in target.iterdir():
             if p.is_dir(): handle_directory(p)
-            if p.is_file(): upload_file(s3_bucket, str(p), str(p.relative_to(root)))
+            if p.is_file(): upload_file(s3_bucket, str(p), str(p.relative_to(root).as_posix()))
 
     handle_directory(root)
 
