@@ -14,7 +14,6 @@ Webotrone automates the process of deploying static websites to AWS
 """
 
 import boto3
-from botocore.exceptions import ClientError
 import click
 from bucket import BucketManager
 
