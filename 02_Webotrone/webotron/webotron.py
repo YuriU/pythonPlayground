@@ -1,5 +1,6 @@
 import boto3
 import click
+from pathlib import Path
 from botocore.exceptions import ClientError
 
 session = boto3.Session(profile_name='default')
