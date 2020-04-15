@@ -147,7 +147,7 @@ class BucketManager:
         etag = self.gen_etag(path)
 
         if self.manifest.get(key, '') == etag:
-            print("Skipping {}, etags match".format(path))
+            print("Skipping {}, etags match".format(key))
             return
 
         return bucket.upload_file(
