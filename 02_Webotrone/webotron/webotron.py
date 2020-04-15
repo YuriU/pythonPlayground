@@ -16,10 +16,12 @@ Webotrone automates the process of deploying static websites to AWS
 import boto3
 import click
 from bucket import BucketManager
+from domain import DomainManager
 
 
 session = None
 bucket_manager = None
+domain_manager = None
 
 
 @click.group()
@@ -28,14 +30,16 @@ bucket_manager = None
 def cli(profile):
     """Webotron deploys websites to AWS"""
 
-    global session, bucket_manager
+    global session, bucket_manager, domain_manager
 
     session_cfg = {}
     if profile:
         session_cfg['profile_name'] = profile
 
     session = boto3.Session(**session_cfg)
+    domain_manager = DomainManager(session)
     bucket_manager = BucketManager(session)
+    
 
 @cli.command('list-buckets')
 def list_buckets():
@@ -75,6 +79,16 @@ def sync(pathname, bucket):
     bucket_manager.sync(pathname, bucket)
     print(bucket_manager.get_bucket_url(bucket_manager.s3.Bucket(bucket)))
     pass
+
+@cli.command('setup-domain')
+@click.argument('domain')
+@click.argument('bucket')
+def setup_domain(domain, bucket):
+    """Configure DOMAIN to point to BUCKET."""
+
+    zone = domain_manager.find_hosted_zone(domain)
+    print(zone)
+
 
 
 if __name__ == '__main__':
