@@ -3,4 +3,6 @@
 /01_ACG_SnapshotAnalyzer/dist
 /01_ACG_SnapshotAnalyzer/snapshotanalyzer_3000.egg-info
 /03_Notifon/config.dev.json
-/03_Notifon/notifier/__pycache__
+__pycache__/
+node_modules/
+/03_Notifon/notifier/package-lock.json
