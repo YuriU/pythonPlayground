@@ -6,3 +6,4 @@
 __pycache__/
 node_modules/
 /03_Notifon/notifier/package-lock.json
+/04_Videolyzer/config.dev.json
