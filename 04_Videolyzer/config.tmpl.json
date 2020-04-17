@@ -1,0 +1,7 @@
+{
+    "videolyzer": {
+        "profile": "",
+        "video_bucket": "",
+        "video_table": ""
+    }
+}
